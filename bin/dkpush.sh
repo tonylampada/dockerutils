@@ -5,7 +5,7 @@ version=$2
 if [ -f ~/.dockerutils/env.sh ]; then
     source ~/.dockerutils/env.sh
 fi
-aws ecr get-login --region us-east-1 | sh
+aws ecr get-login --region us-east-1 --no-include-email | sh
 imglocal=$app:latest
 imgremote=$ECRHOME/$app:$version
 docker tag $imglocal $imgremote

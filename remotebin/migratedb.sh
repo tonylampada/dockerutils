@@ -9,7 +9,7 @@ fi
 
 dkpull() {
     remoteimg="$ECRHOME/$app:$version"
-    aws ecr get-login --region us-east-1 | sh
+    aws ecr get-login --region us-east-1 --no-include-email | sh
     docker pull $remoteimg
     docker tag $remoteimg $app:$environ
 }
