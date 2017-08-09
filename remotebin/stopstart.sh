@@ -5,8 +5,9 @@ environ=$3
 service=$4
 cmd="$5"
 
-DKU="$(dirname ${BASH_SOURCE[0]})/.."
-source $DKU/commons/aws.env
+if [ -f ~/.dockerutils/env.sh ]; then
+    source ~/.dockerutils/env.sh
+fi
 
 dkpull() {
     remoteimg="$ECRHOME/$app:$version"
