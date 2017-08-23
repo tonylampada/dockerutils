@@ -23,7 +23,7 @@ dkstopstart(){
     envfile=~/${app}_${environ}.env
     docker stop $containername
     docker rm $containername
-    docker run -d --restart=unless-stopped --name=$containername --env-file=$envfile -v $dkdata:/dkdata $image $cmd
+    docker run -d --name=$containername --env-file=$envfile -v $dkdata:/dkdata $image $cmd
     exitcode=$?
     return $exitcode
 }
