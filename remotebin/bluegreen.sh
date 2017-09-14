@@ -36,6 +36,7 @@ dkpull() {
     docker pull $remoteimg
     docker tag $remoteimg $app:$environ
     docker tag $remoteimg $app:${environ}_${nextcolor}
+    docker rmi $remoteimg
 }
 
 dkstartnew(){
