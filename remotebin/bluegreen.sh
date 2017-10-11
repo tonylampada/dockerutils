@@ -46,7 +46,6 @@ dkstartnew(){
     echo iniciando container
     dkdata="$dockerdata/$nextcolor"
     mkdir -p $dkdata
-    sudo rm -Rf $dkdata/*
     docker stop $nextname
     docker rm $nextname
     docker run -d --name=$nextname --env-file=$envfile -v $dkdata:/dkdata $image start.sh
