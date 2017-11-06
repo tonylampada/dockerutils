@@ -17,6 +17,9 @@ function resolve_target_hosts {
         fi
         asgname=$(dynamicvar ${service}_ASG)
         instanceids=$(aws autoscaling describe-auto-scaling-groups --auto-scaling-group-name $asgname --query 'AutoScalingGroups[*].Instances[*].InstanceId' --output text --profile $AWS_PROFILE)
+        if [ -z "$instanceids" ]; then
+            return
+        fi
         hostnames=$(aws ec2 describe-instances --instance-ids $instanceids --query='Reservations[*].Instances[*].PublicDnsName' --output text --profile $AWS_PROFILE)
         for host in $hostnames; do
             echo ubuntu@$host
@@ -36,8 +39,7 @@ if [ "$hosts" ]; then
     echo "[STOPSTART] hosts pra iniciar $service: $hosts"
     for host in $hosts; do
         install_dockerutils_remote.sh $host
-        cmd=$(dynamicvar ${service}_CMD)
-        ssh -o StrictHostKeyChecking=no $host dockerutils/remotebin/stopstart.sh $app $version $environ $service "$cmd"
+        ssh -o StrictHostKeyChecking=no $host dockerutils/remotebin/stopstart.sh $app $version $environ $service
         echo "[STOPSTART] $service iniciado no host $host"
     done
 fi

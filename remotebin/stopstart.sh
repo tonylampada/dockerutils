@@ -3,7 +3,6 @@ app=$1
 version=$2
 environ=$3
 service=$4
-cmd="$5"
 
 if [ -f ~/.dockerutils/env.sh ]; then
     source ~/.dockerutils/env.sh
@@ -22,9 +21,10 @@ dkstopstart(){
     dkdata=~/dockerdata/${app}_${environ}
     image=$app:$environ
     envfile=~/${app}_${environ}.env
+    docker exec $containername stop_${service}.sh
     docker stop $containername
     docker rm $containername
-    docker run -d --name=$containername --env-file=$envfile -v $dkdata:/dkdata $image $cmd
+    docker run -d --restart=unless-stopped --name=$containername --env-file=$envfile -v $dkdata:/dkdata $image start_${service}.sh
     exitcode=$?
     return $exitcode
 }
