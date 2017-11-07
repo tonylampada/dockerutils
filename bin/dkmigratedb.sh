@@ -3,9 +3,9 @@ app=$1
 version=$2
 environ=$3
 
-if [ -f ~/.dockerutils/env.sh ]; then
-    source ~/.dockerutils/env.sh
-fi
+SCRIPTPATH="$( cd "$(dirname "$0")" ; pwd -P )"
+source $SCRIPTPATH/common.sh
+
 if [ "$MIGRATION_HOST" ]; then
     echo "[MIGRATION] host pra rodar migration: $MIGRATION_HOST"
     install_dockerutils_remote.sh $MIGRATION_HOST

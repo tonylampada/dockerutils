@@ -3,12 +3,12 @@ app=$1
 version=$2
 environ=$3
 
-if [ -f ~/.dockerutils/env.sh ]; then
-    source ~/.dockerutils/env.sh
-fi
+SCRIPTPATH="$( cd "$(dirname "$0")" ; pwd -P )"
+source $SCRIPTPATH/common.sh
 
 resolvecolors(){
-    dockerdata=~/dockerdata/${app}_${environ}
+    local app=$1
+    local environ=$2
     mkdir -p $dockerdata
     chmod o+r $dockerdata
     if [ -L $dockerdata/current ]
@@ -30,28 +30,21 @@ resolvecolors(){
 
 }
 
-dkpull() {
-    remoteimg="$ECRHOME/$app:$version"
-    aws ecr get-login --region us-east-1 --no-include-email | sh
-    docker pull $remoteimg
-    docker tag $remoteimg $app:$environ
-    docker tag $remoteimg $app:${environ}_${nextcolor}
-    docker rmi $remoteimg
-}
-
 dkstartnew(){
-    nextname=${app}_${environ}_${nextcolor}
-    image=$app:$environ
-    envfile=~/${app}_${environ}.env
-    echo iniciando container
-    dkdata="$dockerdata/$nextcolor"
+    local app=$1
+    local environ=$2
+    local nextcolor=$3
+    local image=$app:$environ
+    local envfile=$HOME/${app}_${environ}.env
+    echo "iniciando container $nextname"
+    local dkdata="$HOME/dockerdata/${app}_${environ}/$nextcolor"
     mkdir -p $dkdata
     docker stop $nextname
     docker rm $nextname
     docker run -d --name=$nextname --env-file=$envfile -v $dkdata:/dkdata $image start.sh
     echo espera subir
     docker exec $nextname wait_for_start.sh
-    exitcode=$?
+    local exitcode=$?
     return $exitcode
 }
 
@@ -59,19 +52,25 @@ switchtraffic() {
     echo trocando o trafego
     rm $dockerdata/current
     ln -s $dockerdata/$nextcolor $dockerdata/current
+    echo "ln -s $dockerdata/$nextcolor $dockerdata/current"
 }
 
 dkstopold(){
     echo mata o velho
-    oldname=${app}_${environ}_${currcolor}
+    local oldname=${app}_${environ}_${currcolor}
     docker exec $oldname stop.sh
     docker stop $oldname
 }
 
+# globals
+canonized_app=${app/\//_}
+dockerdata=$HOME/dockerdata/${app}_${environ}
+resolvecolors "$app" "$environ"
+nextname=${canonized_app}_${environ}_${nextcolor}
 
-resolvecolors
-dkpull 
-dkstartnew
+dkpull "$app" "$version" "$environ"
+dkstartnew "$app" "$environ" "$nextcolor"
+
 if [ "$exitcode" == "0" ]; then
     switchtraffic
     dkstopold

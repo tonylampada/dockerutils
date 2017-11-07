@@ -4,21 +4,12 @@ version=$2
 environ=$3
 service=$4
 
-if [ -f ~/.dockerutils/env.sh ]; then
-    source ~/.dockerutils/env.sh
-fi
-
-dkpull() {
-    remoteimg="$ECRHOME/$app:$version"
-    aws ecr get-login --region us-east-1 --no-include-email | sh
-    docker pull $remoteimg
-    docker tag $remoteimg $app:$environ
-    docker rmi $remoteimg
-}
+SCRIPTPATH="$( cd "$(dirname "$0")" ; pwd -P )"
+source $SCRIPTPATH/common.sh
 
 dkstopstart(){
     containername=${app}_${environ}_${service}
-    dkdata=~/dockerdata/${app}_${environ}
+    dkdata="$HOME/dockerdata/${app}_${environ}"
     image=$app:$environ
     envfile=~/${app}_${environ}.env
     docker exec $containername stop_${service}.sh
@@ -29,5 +20,5 @@ dkstopstart(){
     return $exitcode
 }
 
-dkpull 
+dkpull $app $version $environ
 dkstopstart

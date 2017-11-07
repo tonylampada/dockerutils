@@ -3,6 +3,8 @@ app=$1
 version=$2
 environ=$3
 
+SCRIPTPATH="$( cd "$(dirname "$0")" ; pwd -P )"
+source $SCRIPTPATH/common.sh
 
 function resolve_target_hosts {
     if [ "aws_asg" == "$DEPLOY_TARGET_TYPE" ]; then
@@ -22,9 +24,6 @@ function resolve_target_hosts {
     fi
 }
 
-if [ -f ~/.dockerutils/env.sh ]; then
-    source ~/.dockerutils/env.sh
-fi
 hosts=$(resolve_target_hosts)
 if [ "$hosts" ]; then
     echo "[BLUEGREEN] hosts pra deploy: $hosts"
