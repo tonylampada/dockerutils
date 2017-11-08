@@ -28,7 +28,7 @@ hosts=$(resolve_target_hosts)
 if [ "$hosts" ]; then
     echo "[BLUEGREEN] hosts pra deploy: $hosts"
     for host in $hosts; do
-        install_dockerutils_remote.sh $host
+        $SCRIPTPATH/install_dockerutils_remote.sh $host
         ssh -o StrictHostKeyChecking=no $host dockerutils/remotebin/bluegreen.sh $app $version $environ
         echo "[BLUEGREEN] deploy feito no host $host"
     done

@@ -71,7 +71,7 @@ nextname=${canonized_app}_${environ}_${nextcolor}
 dkpull "$app" "$version" "$environ"
 dkstartnew "$app" "$environ" "$nextcolor"
 
-if [ "$exitcode" == "0" ]; then
+if [ "$?" == "0" ]; then
     switchtraffic
     dkstopold
     echo "old = $currcolor"
