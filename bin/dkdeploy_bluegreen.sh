@@ -24,6 +24,7 @@ function resolve_target_hosts {
     fi
 }
 
+set -e
 hosts=$(resolve_target_hosts)
 if [ "$hosts" ]; then
     echo "[BLUEGREEN] hosts pra deploy: $hosts"
