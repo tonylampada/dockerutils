@@ -3,6 +3,8 @@ app=$1
 version=$2
 environ=$3
 
+SCRIPTPATH="$( cd "$(dirname "$0")" ; pwd -P )"
+source $SCRIPTPATH/common.sh
 
 function resolve_target_hosts {
     if [ "aws_asg" == "$DEPLOY_TARGET_TYPE" ]; then
@@ -22,14 +24,11 @@ function resolve_target_hosts {
     fi
 }
 
-if [ -f ~/.dockerutils/env.sh ]; then
-    source ~/.dockerutils/env.sh
-fi
 hosts=$(resolve_target_hosts)
 if [ "$hosts" ]; then
     echo "[BLUEGREEN] hosts pra deploy: $hosts"
     for host in $hosts; do
-        install_dockerutils_remote.sh $host
+        $SCRIPTPATH/install_dockerutils_remote.sh $host
         ssh -o StrictHostKeyChecking=no $host dockerutils/remotebin/bluegreen.sh $app $version $environ
         echo "[BLUEGREEN] deploy feito no host $host"
     done
