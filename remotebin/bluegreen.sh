@@ -57,7 +57,7 @@ switchtraffic() {
 
 dkstopold(){
     echo mata o velho
-    local oldname=${app}_${environ}_${currcolor}
+    local oldname=${canonized_app}_${environ}_${currcolor}
     docker exec $oldname stop.sh
     docker stop $oldname
 }
