@@ -25,6 +25,7 @@ function resolve_target_hosts {
 }
 
 set -e
+echo setei o menos e
 hosts=$(resolve_target_hosts)
 if [ "$hosts" ]; then
     echo "[BLUEGREEN] hosts pra deploy: $hosts"
