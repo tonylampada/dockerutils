@@ -22,6 +22,7 @@ function resolve_target_hosts {
     fi
 }
 
+set -e
 if [ -f ~/.dockerutils/env.sh ]; then
     source ~/.dockerutils/env.sh
 fi
