@@ -41,7 +41,7 @@ dkstartnew(){
     mkdir -p $dkdata
     docker stop $nextname
     docker rm $nextname
-    docker run -d --name=$nextname --env-file=$envfile -v $dkdata:/dkdata $image start.sh
+    docker run -d --restart=unless-stopped --name=$nextname --env-file=$envfile -v $dkdata:/dkdata $image start.sh
     echo espera subir
     docker exec $nextname wait_for_start.sh
     local exitcode=$?
