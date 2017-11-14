@@ -10,13 +10,11 @@ function dynamicvar {
 }
 
 function resolve_target_hosts {
-    targettype=$(dynamicvar ${service}_DEPLOY_TARGET_TYPE)
-    if [ "aws_asg" == "$targettype" ]; then
+    if [ "aws_asg" == "$DEPLOY_TARGET_TYPE" ]; then
         if [ ! "$AWS_PROFILE" ]; then
             AWS_PROFILE=default
         fi
-        asgname=$(dynamicvar ${service}_ASG)
-        instanceids=$(aws autoscaling describe-auto-scaling-groups --auto-scaling-group-name $asgname --query 'AutoScalingGroups[*].Instances[*].InstanceId' --output text --profile $AWS_PROFILE)
+        instanceids=$(aws autoscaling describe-auto-scaling-groups --auto-scaling-group-name $ASG --query 'AutoScalingGroups[*].Instances[*].InstanceId' --output text --profile $AWS_PROFILE)
         if [ -z "$instanceids" ]; then
             return
         fi
@@ -24,11 +22,8 @@ function resolve_target_hosts {
         for host in $hostnames; do
             echo ubuntu@$host
         done
-    elif [ "host" == "$targettype" ]; then
-        host=$(dynamicvar ${service}_HOST)
-        echo $host
     else
-        echo ""
+        echo $HOST
     fi
 }
 
