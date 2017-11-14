@@ -33,6 +33,7 @@ DKU="$(dirname ${BASH_SOURCE[0]})/.."
 hosts=$(resolve_target_hosts)
 if [ "$hosts" ]; then
     echo "[STOPSTART] hosts pra iniciar $service: $hosts"
+    echo "[STOPSTART] DKPARAMS=$DKPARAMS"
     for host in $hosts; do
         install_dockerutils_remote.sh $host
         ssh -o StrictHostKeyChecking=no $host dockerutils/remotebin/stopstart.sh $app $version $environ $service "$DKPARAMS"
