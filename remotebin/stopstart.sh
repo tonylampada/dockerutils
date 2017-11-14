@@ -8,7 +8,7 @@ SCRIPTPATH="$( cd "$(dirname "$0")" ; pwd -P )"
 source $SCRIPTPATH/common.sh
 
 dkstopstart(){
-    containername=${app}_${environ}_${service}
+    containername=${canonized_app}_${environ}_${service}
     dkdata="$HOME/dockerdata/${app}_${environ}"
     image=$app:$environ
     envfile=~/${app}_${environ}.env
@@ -20,5 +20,7 @@ dkstopstart(){
     return $exitcode
 }
 
+# globals
+canonized_app=${app/\//_}
 dkpull $app $version $environ
 dkstopstart

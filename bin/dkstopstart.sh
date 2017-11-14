@@ -32,8 +32,8 @@ function resolve_target_hosts {
     fi
 }
 
+set -e
 DKU="$(dirname ${BASH_SOURCE[0]})/.."
-source $DKU/envs/${app}_${environ}.env
 hosts=$(resolve_target_hosts)
 if [ "$hosts" ]; then
     echo "[STOPSTART] hosts pra iniciar $service: $hosts"
