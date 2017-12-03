@@ -18,7 +18,6 @@ function waitpidsaveresult() {
   p=$1
   i=$2
   set +e
-  echo esperando $i $p
   wait $p
   excods[$i]=$?
   set -e
@@ -34,14 +33,12 @@ if [ "$hosts" ]; then
         vaiupdate $host & pids[$i]=$!
         echo "[UPDATEIMG] imagem atualizada no host $host"
     done
-    echo "vai esperar"
     for i in "${!pids[@]}"; do 
         waitpidsaveresult ${pids[$i]} $i
     done
-    echo "vai sair"
     for i in "${!pids[@]}"; do 
-        echo "vaiupdate no host ${ahosts[$i]} saiu com codigo ${excods[$i]}"
         if [ ${excods[$i]} != "0" ]; then
+          echo "vaiupdate no host ${ahosts[$i]} saiu com codigo ${excods[$i]}"
             exit ${excods[$i]}
         fi
     done
