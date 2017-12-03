@@ -19,6 +19,14 @@ dklogin() {
     fi
 }
 
+resolve_target_hosts() {
+    if [ "aws_asg" == "$TARGET_TYPE" ]; then
+        list_asg.sh $ASG
+    else
+        echo $HOST
+    fi
+}
+
 dkpull() {
     local app=$1
     local version=$2
@@ -31,4 +39,3 @@ dkpull() {
     docker tag $remoteimg $localimg
     docker rmi $remoteimg
 }
-
