@@ -8,6 +8,7 @@ source $SCRIPTPATH/common.sh
 imglocal=$app:latest
 imgremote=$DOCKER_REGISTRY/$app:$version
 
+set -e
 dklogin
 docker tag $imglocal $imgremote
 echo "pushing docker image $imgremote ..."

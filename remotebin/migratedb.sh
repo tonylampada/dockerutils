@@ -15,5 +15,6 @@ dkmigratedb(){
     return $exitcode
 }
 
+set -e
 dkpull $app $version $environ
 dkmigratedb
