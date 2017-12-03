@@ -3,8 +3,11 @@ if [ -f ~/.dockerutils/env.sh ]; then
 fi
 
 dklogin() {
+    if [ ! "$AWS_PROFILE" ]; then
+        AWS_PROFILE=default
+    fi
     if [ "$DOCKER_REGISTRY_TYPE" = "ec2" ]; then
-        aws ecr get-login --region us-east-1 --no-include-email | sh
+        aws ecr get-login --profile AWS_PROFILE --no-include-email | sh
         return 0
     elif [ "$DOCKER_REGISTRY_TYPE" = "gitlab" ]; then
         docker login -u "$DOCKER_GITLAB_USERNAME" -p "$DOCKER_GITLAB_PASSWORD" "$DOCKER_REGISTRY"
