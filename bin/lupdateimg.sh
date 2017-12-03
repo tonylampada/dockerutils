@@ -41,7 +41,7 @@ if [ "$hosts" ]; then
     echo "vai sair"
     for i in "${!pids[@]}"; do 
         echo "vaiupdate no host ${ahosts[$i]} saiu com codigo ${excods[$i]}"
-        if [ ${pid[$i]} != "0" ]; then
+        if [ ${excods[$i]} != "0" ]; then
             exit ${excods[$i]}
         fi
     done
