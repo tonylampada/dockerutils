@@ -9,7 +9,7 @@ source $SCRIPTPATH/common.sh
 
 function vaiupdate(){
     host=$1
-    install_dockerutils_remote.sh $host
+    linstall_dockerutils_remote.sh $host
     ssh -o StrictHostKeyChecking=no $host dockerutils/remotebin/updateimg.sh $app $version $environ
 }
 

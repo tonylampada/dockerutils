@@ -7,5 +7,6 @@ SCRIPTPATH="$( cd "$(dirname "$0")" ; pwd -P )"
 source $SCRIPTPATH/common.sh
 
 set -e
+dklogin
 dkpull $app $version $environ
 $SCRIPTPATH/pullconfig.sh $app $environ
