@@ -35,7 +35,7 @@ dkstartnew(){
     local environ=$2
     local nextcolor=$3
     local image=$app:$environ
-    local envfile=$HOME/${app}_${environ}.env
+    local envfile=$HOME/${canonized_app}_${environ}.env
     echo "iniciando container $nextname"
     local dkdata="$HOME/dockerdata/${app}_${environ}/$nextcolor"
     mkdir -p $dkdata
