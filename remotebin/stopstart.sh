@@ -23,6 +23,7 @@ dkstopstart(){
 }
 
 # globals
+set -e
 canonized_app=${app/\//_}
 dkpull $app $version $environ
 dkstopstart
