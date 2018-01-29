@@ -68,8 +68,6 @@ canonized_app=${app/\//_}
 dockerdata=$HOME/dockerdata/${app}_${environ}
 resolvecolors "$app" "$environ"
 nextname=${canonized_app}_${environ}_${nextcolor}
-
-dkpull "$app" "$version" "$environ"
 dkstartnew "$app" "$environ" "$nextcolor"
 
 if [ "$?" == "0" ]; then
