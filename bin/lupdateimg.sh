@@ -12,6 +12,7 @@ function vaiupdate(){
     set -e
     linstall_dockerutils_remote.sh $host
     ssh -o StrictHostKeyChecking=no $host dockerutils/remotebin/updateimg.sh $app $version $environ
+    echo "[UPDATEIMG] imagem atualizada no host $host"
 }
 
 function waitpidsaveresult() {
@@ -31,7 +32,6 @@ if [ "$hosts" ]; then
     echo "[UPDATEIMG] hosts pra atualizar imagens: $hosts"
     for host in $hosts; do
         vaiupdate $host & pids[$i]=$!
-        echo "[UPDATEIMG] imagem atualizada no host $host"
     done
     for i in "${!pids[@]}"; do 
         waitpidsaveresult ${pids[$i]} $i
