@@ -13,10 +13,9 @@ dkstopstart(){
     dkdata="$HOME/dockerdata/${app}_${environ}"
     image=$app:$environ
     envfile=~/${canonized_app}_${environ}.env
-    echo "stopstart 1 $containername $dkdata $image $envfile"
-    (docker exec $containername stop_${service}.sh; exit 0)
-    (docker stop $containername; exit 0)
-    (docker rm $containername; exit 0)
+    docker exec $containername stop_${service}.sh || true
+    docker stop $containername || true
+    docker rm $containername || true
     echo "stopstart with $DKPARAMS"
     docker run $DKPARAMS -d --restart=unless-stopped --name=$containername --env-file=$envfile -v $dkdata:/dkdata $image start_${service}.sh
     exitcode=$?
