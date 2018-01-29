@@ -13,6 +13,7 @@ dkstopstart(){
     dkdata="$HOME/dockerdata/${app}_${environ}"
     image=$app:$environ
     envfile=~/${canonized_app}_${environ}.env
+    echo "stopstart 1 $containername $dkdata $image $envfile"
     (docker exec $containername stop_${service}.sh; exit 0)
     (docker stop $containername; exit 0)
     (docker rm $containername; exit 0)
@@ -25,5 +26,4 @@ dkstopstart(){
 # globals
 set -e
 canonized_app=${app/\//_}
-dkpull $app $version $environ
 dkstopstart
