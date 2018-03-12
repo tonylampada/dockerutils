@@ -7,6 +7,8 @@ environ=$4
 SCRIPTPATH="$( cd "$(dirname "$0")" ; pwd -P )"
 source $SCRIPTPATH/common.sh
 
+source_app_env $app $environ
+
 function vaiupdate(){
     host=$1
     set -e

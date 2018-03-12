@@ -2,6 +2,20 @@ if [ -f ~/.dockerutils/env.sh ]; then
     source ~/.dockerutils/env.sh
 fi
 
+source_app_env() {
+    local app=$1
+    local environ=$2
+
+    if [ "$app" == "" -o "$environ" == "" ]; then
+        return;
+    fi
+
+    if [ -e "$HOME/.dockerutils/${app}_${environ}/env.sh" ]; then
+        echo "Sourcing $HOME/.dockerutils/${app}_${environ}/env.sh ..."
+        source $HOME/.dockerutils/${app}_${environ}/env.sh
+    fi
+}
+
 dklogin() {
     if [ ! "$AWS_PROFILE" ]; then
         AWS_PROFILE=default

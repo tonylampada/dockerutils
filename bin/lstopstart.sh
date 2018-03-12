@@ -8,6 +8,8 @@ DKPARAMS="$5"
 SCRIPTPATH="$( cd "$(dirname "$0")" ; pwd -P )"
 source $SCRIPTPATH/common.sh
 
+source_app_env $app $environ
+
 set -e
 DKU="$(dirname ${BASH_SOURCE[0]})/.."
 hosts=$(resolve_target_hosts)

@@ -7,6 +7,7 @@ DKPARAMS="${@:5}"
 
 SCRIPTPATH="$( cd "$(dirname "$0")" ; pwd -P )"
 source $SCRIPTPATH/common.sh
+source_env_app $app $environ
 
 dkstopstart(){
     containername=${canonized_app}_${environ}_${service}
