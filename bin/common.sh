@@ -10,9 +10,9 @@ source_app_env() {
         return;
     fi
 
-    if [ -e "$HOME/.dockerutils/$app/$environ/env.sh" ]; then
-        echo "Sourcing $HOME/.dockerutils/$app/$environ/env.sh ..."
-        source $HOME/.dockerutils/$app/$environ/env.sh
+    if [ -e "$HOME/.dockerutils/${app}_${environ}/env.sh" ]; then
+        echo "Sourcing $HOME/.dockerutils/${app}_${environ}/env.sh ..."
+        source $HOME/.dockerutils/${app}_${environ}/env.sh
     fi
 }
 
