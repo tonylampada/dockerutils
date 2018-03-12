@@ -5,7 +5,7 @@ environ=$3
 
 SCRIPTPATH="$( cd "$(dirname "$0")" ; pwd -P )"
 source $SCRIPTPATH/common.sh
-source_env_app $app $environ
+source_app_env $app $environ
 
 dkmigratedb(){
     containername=${app}_${environ}_migratedb

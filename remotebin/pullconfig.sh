@@ -4,7 +4,7 @@ environ=$2
 
 SCRIPTPATH="$( cd "$(dirname "$0")" ; pwd -P )"
 source $SCRIPTPATH/common.sh
-source_env_app $app $environ
+source_app_env $app $environ
 
 set -e
 scp -i ~/.ssh/cfgstore.pem -r  "$CFGSTORE_HOST:configstore/${app}_${environ}/*" ~/
