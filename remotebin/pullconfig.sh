@@ -7,5 +7,5 @@ source $SCRIPTPATH/common.sh
 source_app_env $app $environ
 
 set -e
-scp -i ~/.ssh/cfgstore.pem -r  "$CFGSTORE_HOST:configstore/${app}_${environ}/*" ~/
+scp -o StrictHostKeyChecking=no -i ~/.ssh/cfgstore.pem -r  "$CFGSTORE_HOST:configstore/${app}_${environ}/*" ~/
 echo "pullconfig baixou configuracoes de $CFGSTORE_HOST:configstore/${app}_${environ}"
