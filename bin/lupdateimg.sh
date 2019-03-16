@@ -21,7 +21,9 @@ function waitpidsaveresult() {
   p=$1
   i=$2
   set +e
+  echo "[UPDATEIMG] waitpid $i $p ..."
   wait $p
+  echo "[UPDATEIMG] waitpid $i $p DONE"
   excods[$i]=$?
   set -e
 }
