@@ -33,6 +33,7 @@ if [ "$hosts" ]; then
     set -e
     echo "[UPDATEIMG] hosts pra atualizar imagens: $hosts"
     for host in $hosts; do
+        echo "[UPDATEIMG] iniciando em $host"
         vaiupdate $host & pids[$i]=$!
     done
     for i in "${!pids[@]}"; do 
