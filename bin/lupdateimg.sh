@@ -34,9 +34,11 @@ if [ "$hosts" ]; then
     ahosts=($hosts)
     set -e
     echo "[UPDATEIMG] hosts pra atualizar imagens: $hosts"
+    i=0
     for host in $hosts; do
         echo "[UPDATEIMG] iniciando em $host"
         vaiupdate $host & pids[$i]=$!
+        i=$(($i+1))
     done
     for i in "${!pids[@]}"; do 
         waitpidsaveresult ${pids[$i]} $i
