@@ -19,11 +19,9 @@ resolvecolors(){
         then
             currcolor=blue
             nextcolor=green
-            dkparams="$DKPARAMS_GREEN"
         else
             currcolor=green
             nextcolor=blue
-            dkparams="$DKPARAMS_BLUE"
         fi
     else
         ln -s $dockerdata/blue $dockerdata/current
@@ -44,7 +42,7 @@ dkstartnew(){
     mkdir -p $dkdata
     docker stop $nextname || true
     docker rm $nextname || true
-    docker run -d $dkparams --restart=unless-stopped --name=$nextname --env-file=$envfile -v $dkdata:/dkdata $image start.sh
+    docker run -d --restart=unless-stopped --name=$nextname --env-file=$envfile -v $dkdata:/dkdata $image start.sh
     echo espera subir
     docker exec $nextname wait_for_start.sh
     local exitcode=$?
@@ -59,7 +57,7 @@ switchtraffic() {
 }
 
 dkstopold(){
-    echo mata o velho
+    echo assim vc mata o velho
     local oldname=${canonized_app}_${environ}_${currcolor}
     docker exec $oldname stop.sh || true
     docker stop $oldname || true
