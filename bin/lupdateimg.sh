@@ -17,14 +17,14 @@ function vaiupdate(){
     echo "[UPDATEIMG] imagem atualizada no host $host"
 }
 
-# function waitpidsaveresult() {
-#   p=$1
-#   i=$2
-#   set +e
-#   wait $p
-#   excods[$i]=$?
-#   set -e
-# }
+function waitpidsaveresult() {
+  p=$1
+  i=$2
+  set +e
+  wait $p
+  excods[$i]=$?
+  set -e
+}
 
 if [ "$hosts" ]; then
     pids=()
@@ -32,9 +32,19 @@ if [ "$hosts" ]; then
     ahosts=($hosts)
     set -e
     echo "[UPDATEIMG] hosts pra atualizar imagens: $hosts"
+    i=0
     for host in $hosts; do
         echo "[UPDATEIMG] iniciando em $host"
-        vaiupdate $host
+        vaiupdate $host & pids[$i]=$!
+        i=$(($i+1))
     done
-    echo "[UPDATEIMG] done"
+    for i in "${!pids[@]}"; do 
+        waitpidsaveresult ${pids[$i]} $i
+    done
+    for i in "${!pids[@]}"; do 
+        if [ ${excods[$i]} != "0" ]; then
+          echo "vaiupdate no host ${ahosts[$i]} saiu com codigo ${excods[$i]}"
+            exit ${excods[$i]}
+        fi
+    done
 fi

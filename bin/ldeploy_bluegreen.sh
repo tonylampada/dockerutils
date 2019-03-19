@@ -9,11 +9,11 @@ source_app_env $app $environ
 
 set -e
 if [ "$HOSTS" ]; then
-	hosts="$HOSTS"
-	echo "hosts sem resolve: $hosts"
+    hosts="$HOSTS"
+    echo "hosts sem resolve: $hosts"
 else
-	hosts=$(resolve_target_hosts)
-	echo "resolved hosts: $hosts"
+    hosts=$(resolve_target_hosts)
+    echo "resolved hosts: $hosts"
 fi
 if [ "$hosts" ]; then
     echo "[BLUEGREEN] hosts pra deploy: $hosts"
