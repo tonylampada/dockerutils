@@ -8,7 +8,13 @@ source $SCRIPTPATH/common.sh
 source_app_env $app $environ
 
 set -e
-hosts=$(resolve_target_hosts)
+if [ "$HOSTS" ]; then
+	hosts="$HOSTS"
+	echo "hosts sem resolve: $hosts"
+else
+	hosts=$(resolve_target_hosts)
+	echo "resolved hosts: $hosts"
+fi
 if [ "$hosts" ]; then
     echo "[BLUEGREEN] hosts pra deploy: $hosts"
     for host in $hosts; do
