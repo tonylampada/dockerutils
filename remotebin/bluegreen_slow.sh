@@ -84,10 +84,15 @@ switchtraffic() {
 }
 
 dkstopold(){
-    echo assim vc mata o velho
-    local oldname=${canonized_app}_${environ}_${currcolor}
-    docker exec $oldname stop.sh || true
-    docker stop $oldname || true
+    if [ "$currcolor" ]
+    then
+        echo assim vc mata o velho
+        local oldname=${canonized_app}_${environ}_${currcolor}
+        docker exec $oldname stop.sh || true
+        docker stop $oldname || true
+    else
+        echo matar o velho - not today
+    fi
 }
 
 # globals
