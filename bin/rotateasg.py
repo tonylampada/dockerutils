@@ -24,6 +24,7 @@ def rotate():
     asgcli = boto3.client('autoscaling', region_name=region)
     elbcli = boto3.client('elbv2', region_name=region)
     asg = getasg()
+    break_if_protected(asg)
     tgarn = getTargetGroupARN()
     minsize, desired, maxsize = asg['MinSize'], asg['DesiredCapacity'], asg['MaxSize']
     print('ASG starting with min=%s, desired=%s, max=%s' % (minsize, desired, maxsize))
@@ -66,6 +67,12 @@ def waitTrue(interval, timeout, func):
         if timespent > timeout:
             print('Timeout reached. Aborting')
             exit(1)
+
+
+def break_if_protected (asg):
+    if any([i['ProtectedFromScaleIn'] for i in asg['Instances']]):
+        print('There are protected instances. Another deployment may be happenning already. Exiting')
+        exit(1)
 
 
 def unprotect():
