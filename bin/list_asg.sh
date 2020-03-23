@@ -1,9 +1,9 @@
 #!/bin/bash
-asg=$1
+tsg_arn=$1
 if [ ! "$AWS_PROFILE" ]; then
     AWS_PROFILE=default
 fi
-instanceids=$(aws autoscaling describe-auto-scaling-groups --auto-scaling-group-name $asg --query 'AutoScalingGroups[*].Instances[*].InstanceId' --output text --profile $AWS_PROFILE)
+instanceids=$(aws elbv2 describe-target-health --target-group-arn $tsg_arn --query 'TargetHealthDescriptions[*].Target.Id' --output text --profile $AWS_PROFILE)
 if [ -z "$instanceids" ]; then
     exit
 fi
