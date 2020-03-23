@@ -35,6 +35,8 @@ dklogin() {
 resolve_target_hosts() {
     if [ "aws_asg" == "$TARGET_TYPE" ]; then
         list_asg.sh $ASG
+    elif [ "aws_tsg" == "$TARGET_TYPE" ]; then
+        list_tsg.sh $TSG
     else
         echo $HOST
     fi
