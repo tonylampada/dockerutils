@@ -5,8 +5,8 @@ SCRIPTPATH="$( cd "$(dirname "$0")" ; pwd -P )"
 source $SCRIPTPATH/common.sh
 
 set -e
-ssh -o StrictHostKeyChecking=no $host mkdir -p dockerutils
-rsync -L -av $SCRIPTPATH/../remotebin $host:./dockerutils/
+ssh -o GlobalKnownHostsFile=/dev/null -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no $host mkdir -p dockerutils
+rsync -e "ssh -o GlobalKnownHostsFile=/dev/null -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no" -L -av $SCRIPTPATH/../remotebin $host:./dockerutils/
 if [ -d ~/.dockerutils ]; then
     rsync -av ~/.dockerutils $host:./
 fi
